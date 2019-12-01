@@ -1,19 +1,12 @@
-const input = require('fs')
-  .readFileSync('input', 'utf8')
-  .split('\n');
-
-const sum = (x, y) => x + y;
-
 const fuelRequired = (mass) => Math.max(0, Math.floor(mass / 3) - 2);
-
-const part1 = (masses) => masses.map(fuelRequired).reduce(sum);
 
 const recursiveFuelRequired = (mass) => {
   const required = fuelRequired(mass);
-  return required > 0 ? required + recursiveFuelRequired(required) : required;
+  return required ? required + recursiveFuelRequired(required) : required;
 };
 
-const part2 = (masses) => masses.map(recursiveFuelRequired).reduce(sum);
+const total = (method) => (masses) =>
+  masses.map(method).reduce((x, y) => x + y);
 
-console.log('part 1:', part1(input));
-console.log('part 2:', part2(input));
+module.exports.part1 = total(fuelRequired);
+module.exports.part2 = total(recursiveFuelRequired);

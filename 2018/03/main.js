@@ -7,12 +7,6 @@ const parseClaim = (claim) => {
   };
 };
 
-const claims = require('fs')
-  .readFileSync('input', 'utf8')
-  .split('\n')
-  .filter(String)
-  .map(parseClaim);
-
 const fabricMarker = (fabric) => (claim) => {
   for (let w = 0; w < claim.dimensions.w; w++) {
     for (let h = 0; h < claim.dimensions.h; h++) {
@@ -22,17 +16,17 @@ const fabricMarker = (fabric) => (claim) => {
   }
 };
 
-const fabric = {};
-claims.forEach(fabricMarker(fabric));
+module.exports.part1 = (claims) => {
+  const fabric = {};
+  const mark = fabricMarker(fabric);
+  claims.map(parseClaim).forEach(mark);
 
-// part 1
-const overlapCount = Object.values(fabric).reduce(
-  (acc, ids) => (ids.length > 1 ? acc + 1 : acc),
-  0
-);
-console.log(overlapCount);
+  return Object.values(fabric).reduce(
+    (acc, ids) => (ids.length > 1 ? acc + 1 : acc),
+    0
+  );
+};
 
-// part 2
 const findNonOverlappingClaim = (fabric) => {
   const singleIds = new Set(
     Object.values(fabric)
@@ -47,4 +41,9 @@ const findNonOverlappingClaim = (fabric) => {
 
   return [...singleIds].filter((id) => !multiIds.has(id));
 };
-console.log(findNonOverlappingClaim(fabric));
+
+module.exports.part2 = (claims) => {
+  const fabric = {};
+  claims.map(parseClaim).forEach(fabricMarker(fabric));
+  return findNonOverlappingClaim(fabric);
+};
