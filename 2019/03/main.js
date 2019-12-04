@@ -1,31 +1,30 @@
-const lineCoords = (startCoord, line) => {
+const lineCoords = (start, line) => {
   const direction = line[0];
   const count = parseInt(line.slice(1));
   const coords = [];
 
   switch (direction) {
     case 'R':
-      for (let i = startCoord[0] + 1; i <= startCoord[0] + count; i++) {
-        coords.push([i, startCoord[1]]);
+      for (let i = start[0] + 1; i <= start[0] + count; i++) {
+        coords.push([i, start[1]]);
       }
       break;
     case 'L':
-      for (let i = startCoord[0] - 1; i >= startCoord[0] - count; i--) {
-        coords.push([i, startCoord[1]]);
+      for (let i = start[0] - 1; i >= start[0] - count; i--) {
+        coords.push([i, start[1]]);
       }
       break;
     case 'U':
-      for (let i = startCoord[1] + 1; i <= startCoord[1] + count; i++) {
-        coords.push([startCoord[0], i]);
+      for (let i = start[1] + 1; i <= start[1] + count; i++) {
+        coords.push([start[0], i]);
       }
       break;
     case 'D':
-      for (let i = startCoord[1] - 1; i >= startCoord[1] - count; i--) {
-        coords.push([startCoord[0], i]);
+      for (let i = start[1] - 1; i >= start[1] - count; i--) {
+        coords.push([start[0], i]);
       }
       break;
   }
-
   return coords;
 };
 
@@ -41,12 +40,7 @@ module.exports.part1 = (input) => {
 
   return wire1
     .filter((coord) => wire2.has(coord))
-    .map((coord) =>
-      coord
-        .replace(/-/g, '')
-        .split(',')
-        .reduce((x, y) => parseInt(x) + parseInt(y))
-    )
+    .map((c) => c.split(',').reduce((x, y) => Math.abs(x) + Math.abs(y)))
     .sort()[1];
 };
 
