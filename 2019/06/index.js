@@ -1,52 +1,45 @@
-const toTree = (input, rootNode, depth = 1) =>
+const toTree = (input, rootNode = 'COM', depth = 1) =>
   input
-    .filter((i) => i[0] === rootNode)
-    .map((i) => ({
-      value: i[1],
-      parent: rootNode,
-      descendents: toTree(input, i[1], depth + 1),
+    .filter(([parent]) => parent === rootNode)
+    .map(([parent, child]) => ({
+      value: child,
+      parent: parent,
+      descendents: toTree(input, child, depth + 1),
       depth: depth
     }));
 
-const node = (tree, nodeValue) => {
+const findNode = (tree) => (nodeValue) => {
   let result;
   for (const n of tree) {
-    result = n.value === nodeValue ? n : node(n.descendents, nodeValue);
-    if (result) break;
+    result = n.value === nodeValue ? n : findNode(n.descendents)(nodeValue);
+    if (result) return result;
   }
-  return result;
 };
 
 const distanceBetween = (tree, node1, node2) => {
   let count = 0;
-  const nodes = [node(tree, node1), node(tree, node2)].sort(
-    (x, y) => y.depth - x.depth
-  );
+  const find = findNode(tree);
+  const nodes = [find(node1), find(node2)].sort((x, y) => y.depth - x.depth);
 
   while (nodes[0].depth > nodes[1].depth) {
-    nodes[0] = node(tree, nodes[0].parent);
+    nodes[0] = find(nodes[0].parent);
     count++;
   }
 
   while (nodes[0].parent !== nodes[1].parent) {
-    nodes.forEach((n, i) => (nodes[i] = node(tree, n.parent)));
+    nodes.forEach((n, i) => (nodes[i] = find(n.parent)));
     count += 2;
   }
 
   return count;
 };
 
-const orbitTree = (orbits) =>
-  toTree(
-    orbits.map((i) => i.split(')')),
-    'COM'
-  );
+const orbits = (orbit) => toTree(orbit.map((i) => i.split(')')));
 
 const totalOrbits = (orbits, count = 0) =>
   orbits.reduce((acc, cur) => {
     return acc + totalOrbits(cur.descendents, count + 1);
   }, count);
 
-module.exports.part1 = (localOrbits) => totalOrbits(orbitTree(localOrbits));
-module.exports.part2 = (localOrbits) =>
-  distanceBetween(orbitTree(localOrbits), 'SAN', 'YOU');
+module.exports.part1 = (input) => totalOrbits(orbits(input));
+module.exports.part2 = (input) => distanceBetween(orbits(input), 'SAN', 'YOU');
