@@ -4,13 +4,13 @@ const toTree = (input, rootNode = 'COM', depth = 1) =>
     .map(([, child]) => ({
       value: child,
       parent: rootNode,
-      descendents: toTree(input, child, depth + 1),
+      children: toTree(input, child, depth + 1),
       depth: depth
     }));
 
 const findNode = (tree) => (nodeValue) => {
   for (const n of tree) {
-    const node = n.value === nodeValue ? n : findNode(n.descendents)(nodeValue);
+    const node = n.value === nodeValue ? n : findNode(n.children)(nodeValue);
     if (node) return node;
   }
 };
@@ -33,7 +33,7 @@ const orbits = (orbit) => toTree(orbit.map((i) => i.split(')')));
 
 const totalOrbits = (orbits, count = 0) =>
   orbits.reduce((acc, cur) => {
-    return acc + totalOrbits(cur.descendents, count + 1);
+    return acc + totalOrbits(cur.children, count + 1);
   }, count);
 
 module.exports.part1 = (input) => totalOrbits(orbits(input));

@@ -11,9 +11,9 @@ const input = require('fs')
   .split('\n')
   .filter((x) => x.length);
 
-const start = new Date();
 parts.forEach((part) => {
-  if (solution[part]) console.log(`${part}:`, solution[part](input));
+  const start = new Date();
+  solution[part] && console.log(`${part}:`, solution[part](input));
+  const end = new Date();
+  console.log(`${end - start}ms\n`);
 });
-const end = new Date();
-console.log(`${end - start}ms`);
