@@ -1,5 +1,7 @@
-if (process.argv.length < 4)
-  throw '\nExpected year and day arguments (npm start 2019 01)\n';
+if (process.argv.length < 4) {
+  console.log('\nExpected year and day arguments (npm start 2019 01)\n');
+  return;
+}
 
 const year = process.argv[2];
 const day = process.argv[3];

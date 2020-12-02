@@ -1,9 +1,8 @@
 const part1 = (values) => {
+  const ints = values.map((v) => parseInt(v));
   for (let x = 0; x < values.length; x++) {
     for (let y = 0; y < values.length; y++) {
-      const val1 = parseInt(values[x]);
-      const val2 = parseInt(values[y]);
-      if (val1 + val2 === 2020) return val1 * val2;
+      if (ints[x] + ints[y] === 2020) return ints[x] * ints[y];
     }
   }
 };
@@ -20,13 +19,12 @@ const part1_3 = (values) =>
   );
 
 const part2 = (values) => {
+  const ints = values.map((v) => parseInt(v));
   for (let x = 0; x < values.length; x++) {
     for (let y = 0; y < values.length; y++) {
       for (let z = 0; z < values.length; z++) {
-        const val1 = parseInt(values[x]);
-        const val2 = parseInt(values[y]);
-        const val3 = parseInt(values[z]);
-        if (val1 + val2 + val3 === 2020) return val1 * val2 * val3;
+        if (ints[x] + ints[y] + ints[z] === 2020)
+          return ints[x] * ints[y] * ints[z];
       }
     }
   }
