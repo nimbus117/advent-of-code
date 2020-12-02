@@ -14,8 +14,10 @@ const part1_2 = (values) =>
     .reduce((x, y) => x * y);
 
 const part1_3 = (values) =>
-  values.reduce((acc, cur) =>
-    values.includes((2020 - cur).toString()) ? cur * (2020 - cur) : acc
+  values.reduce(
+    (acc, cur) =>
+      values.includes((2020 - cur).toString()) ? cur * (2020 - cur) : acc,
+    null
   );
 
 const part2 = (values) => {
