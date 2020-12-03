@@ -1,9 +1,8 @@
 const slopeHits = ([right, down]) => (values) =>
   values
-    .filter((_, idx) => !(idx % down))
+    .filter((_, index) => !(index % down))
     .slice(1)
-    .map((row, idx) => row[((idx + 1) * right) % row.length] === '#')
-    .reduce((x, y) => x + y);
+    .reduce((a, c, i) => (c[((i + 1) * right) % c.length] === '#') + a, 0);
 
 const multiSlopeHits = (slopes) => (values) =>
   slopes.map((slope) => slopeHits(slope)(values)).reduce((x, y) => x * y);
