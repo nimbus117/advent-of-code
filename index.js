@@ -10,8 +10,7 @@ const parts = process.argv[4] ? [process.argv[4]] : ['part1', 'part2'];
 const solution = require(`./${year}/${day}`);
 const input = require('fs')
   .readFileSync(`./${year}/${day}/input`, 'utf8')
-  .split('\n')
-  .filter((x) => x.length);
+  .split('\n');
 
 parts.forEach((part) => {
   const start = new Date();

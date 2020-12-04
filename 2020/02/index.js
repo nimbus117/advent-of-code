@@ -18,6 +18,7 @@ const validateTobogganPassword = ({ password, char, num1, num2 }) => {
 
 const countValidPasswords = (validator) => (values) =>
   values
+    .filter((x) => x.length)
     .map(parseLine)
     .map(validator)
     .filter(Boolean).length;
