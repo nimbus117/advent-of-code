@@ -8,5 +8,5 @@ module.exports.part1 = (input) =>
 
 module.exports.part2 = (input) =>
   parseIds(input)
-    .filter((x, _, a) => x & 8 && !(a.includes(x - 1) && a.includes(x + 1)))
-    .reduce((a, b) => (a + b) / 2);
+    .sort((a, b) => a - b)
+    .filter((x, i, a) => x + 1 !== a[i + 1])[0] + 1;
