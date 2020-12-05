@@ -1,36 +1,31 @@
-const isBetween = (min, max) => (v) => parseInt(v) >= min && parseInt(v) <= max;
+const parse = (input) =>
+  input.split('\n\n').map((x) => new Map(x.split(/[\s\n]/).map((y) => y.split(':'))));
+
+const isBetween = (min, max) => (x) => parseInt(x) >= min && parseInt(x) <= max;
 
 const fields = {
   byr: isBetween(1920, 2002),
   iyr: isBetween(2010, 2020),
   eyr: isBetween(2020, 2030),
-  hgt: (v) =>
-    v.match(/cm/)
-      ? isBetween(150, 193)(v)
-      : v.match(/in/)
-      ? isBetween(59, 76)(v)
+  hgt: (x) =>
+    x.match(/cm/)
+      ? isBetween(150, 193)(x)
+      : x.match(/in/)
+      ? isBetween(59, 76)(x)
       : false,
-  hcl: (v) => v.match(/^#[0-9a-f]{6}/),
-  ecl: (v) => ['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth'].includes(v),
-  pid: (v) => parseInt(v) > 0 && v.length === 9,
+  hcl: (x) => x.match(/^#[0-9a-field]{6}/),
+  ecl: (x) => ['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth'].includes(x),
+  pid: (x) => parseInt(x) > 0 && x.length === 9
 };
 
-const parse = (values) =>
-  values
-    .flatMap((v) => v.split(' '))
-    .reduce(
-      (a, c) =>
-        c ? { ...a, pp: [c, ...a.pp] } : { pp: [], pps: [a.pp, ...a.pps] },
-      { pp: [], pps: [] }
-    )
-    .pps.map((pp) => new Map(pp.map((field) => field.split(':'))));
+const validFields = (pp) => Object.keys(fields).every((field) => pp.has(field));
 
-const validateFields = (pp) => Object.keys(fields).every((f) => pp.has(f));
+const validValues = (pp) =>
+  Object.entries(fields).every(([field, isValid]) => isValid(pp.get(field)));
 
-const validateValues = (pp) =>
-  Object.keys(fields).every((f) => fields[f](pp.get(f)));
+module.exports.part1 = (input) => parse(input).filter(validFields).length;
 
-module.exports.part1 = (values) => parse(values).filter(validateFields).length;
-
-module.exports.part2 = (values) =>
-  parse(values).filter(validateFields).filter(validateValues).length;
+module.exports.part2 = (input) =>
+  parse(input)
+    .filter(validFields)
+    .filter(validValues).length;
