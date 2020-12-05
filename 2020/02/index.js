@@ -12,12 +12,12 @@ const validateSledPassword = ({ password, char, num1, num2 }) => {
 
 const validateTobogganPassword = ({ password, char, num1, num2 }) => {
   const chars = password.split('');
-  const num2Match = chars[num2 - 1] === char;
-  return chars[num1 - 1] === char ? !num2Match : num2Match;
+  return (chars[num1 - 1] === char) ^ (chars[num2 - 1] === char);
 };
 
 const countValidPasswords = (validator) => (values) =>
   values
+    .split('\n')
     .filter((x) => x.length)
     .map(parseLine)
     .map(validator)
