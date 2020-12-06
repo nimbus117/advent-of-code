@@ -1,19 +1,17 @@
 module.exports.part1 = (input) =>
   input
     .split('\n\n')
-    .map((a) => new Set(a.split('\n').flatMap((b) => b.split(''))).size)
+    .map((a) => new Set(a.match(/\w/g)).size)
     .reduce((a, b) => a + b);
 
 module.exports.part2 = (input) =>
   input
     .split('\n\n')
     .map((a) => {
-      const passengers = a.split('\n').filter(Boolean);
-      const allAnswers = passengers.flatMap((b) => b.split(''));
-      return Array.from(new Set(allAnswers))
-        .map(
-          (c) => allAnswers.filter((d) => d === c).length === passengers.length
-        )
+      const count = a.split('\n').filter(Boolean).length;
+      const answers = a.match(/\w/g);
+      return Array.from(new Set(answers))
+        .map((c) => answers.filter((d) => d === c).length === count)
         .filter(Boolean).length;
     })
     .reduce((a, b) => a + b);
