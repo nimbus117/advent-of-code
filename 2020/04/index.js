@@ -1,5 +1,7 @@
 const parse = (input) =>
-  input.split('\n\n').map((x) => new Map(x.split(/[\s\n]/).map((y) => y.split(':'))));
+  input
+    .split('\n\n')
+    .map((x) => new Map(x.split(/[\s\n]/).map((y) => y.split(':'))));
 
 const isBetween = (min, max) => (x) => parseInt(x) >= min && parseInt(x) <= max;
 
@@ -13,7 +15,7 @@ const fields = {
       : x.match(/in/)
       ? isBetween(59, 76)(x)
       : false,
-  hcl: (x) => x.match(/^#[0-9a-field]{6}/),
+  hcl: (x) => x.match(/^#[0-9a-f]{6}/),
   ecl: (x) => ['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth'].includes(x),
   pid: (x) => parseInt(x) > 0 && x.length === 9
 };
