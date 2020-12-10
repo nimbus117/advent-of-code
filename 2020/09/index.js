@@ -5,10 +5,10 @@ const parse = (input) =>
     .map((x) => parseInt(x));
 
 const sumOf2Match = (numbers, match) =>
-  !numbers.some((x) => numbers.map((y) => x + y).includes(match));
+  numbers.some((x) => numbers.map((y) => x + y).includes(match));
 
 const findStart = (input) =>
-  input.find((x, i) => i >= 25 && sumOf2Match(input.slice(i - 25, i), x));
+  input.find((x, i) => i >= 25 && !sumOf2Match(input.slice(i - 25, i), x));
 
 const findEncryptionWeakness = (input) => {
   const start = findStart(input);
