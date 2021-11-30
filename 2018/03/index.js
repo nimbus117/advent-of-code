@@ -20,6 +20,7 @@ module.exports.part1 = (claims) => {
   const fabric = {};
   const mark = fabricMarker(fabric);
   claims
+    .split('\n')
     .filter((x) => x.length)
     .map(parseClaim)
     .forEach(mark);
@@ -48,6 +49,7 @@ const findNonOverlappingClaim = (fabric) => {
 module.exports.part2 = (claims) => {
   const fabric = {};
   claims
+    .split('\n')
     .filter((x) => x.length)
     .map(parseClaim)
     .forEach(fabricMarker(fabric));

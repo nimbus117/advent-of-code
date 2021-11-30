@@ -35,6 +35,7 @@ const pathCoords = (wireLines) =>
     .map((coord) => coord.join(','));
 
 module.exports.part1 = (input) => {
+  input = input.split('\n');
   const wire1 = pathCoords(input[0]);
   const wire2 = new Set(pathCoords(input[1]));
 
@@ -45,6 +46,7 @@ module.exports.part1 = (input) => {
 };
 
 module.exports.part2 = (input) => {
+  input = input.split('\n');
   const wire1 = pathCoords(input[0]);
   const wire2 = pathCoords(input[1]);
   const wire2Set = new Set(wire2);

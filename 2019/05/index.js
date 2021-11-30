@@ -1,5 +1,8 @@
 const runProgram = (userInput, programInput) => {
-  const program = programInput[0].split(',').map((x) => parseInt(x));
+  const program = programInput
+    .split('\n')[0]
+    .split(',')
+    .map((x) => parseInt(x));
 
   const execute = () => {
     const [m2, m1, ...opCode] = program[pointer]

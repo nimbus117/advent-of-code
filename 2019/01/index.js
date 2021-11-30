@@ -6,7 +6,10 @@ const recursiveFuelRequired = (mass) => {
 };
 
 const total = (method) => (masses) =>
-  masses.map(method).reduce((x, y) => x + y);
+  masses
+    .split('\n')
+    .map(method)
+    .reduce((x, y) => x + y);
 
 module.exports.part1 = total(fuelRequired);
 module.exports.part2 = total(recursiveFuelRequired);

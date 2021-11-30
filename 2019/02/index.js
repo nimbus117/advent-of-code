@@ -1,5 +1,5 @@
 const runProgram = (noun, verb, input) => {
-  const program = input[0].split(',').map((x) => parseInt(x));
+  const program = input.split(',').map((x) => parseInt(x));
   const value = (index) => program[program[index]];
   let op;
   program[1] = noun;

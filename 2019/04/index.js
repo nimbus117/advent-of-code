@@ -17,7 +17,7 @@ const has2Adjacent = (digitArray) =>
   );
 
 const validCounter = (validators) => (passwordRange) => {
-  const [start, end] = passwordRange[0].split('-');
+  const [start, end] = passwordRange.split('\n')[0].split('-');
   let count = 0;
   for (let password = start; password <= end; password++) {
     const validate = (validator) => validator(toDigitArray(password));

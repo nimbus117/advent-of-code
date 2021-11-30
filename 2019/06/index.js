@@ -29,7 +29,7 @@ const distanceBetween = (tree, node1, node2) => {
   return count;
 };
 
-const orbits = (orbit) => toTree(orbit.map((i) => i.split(')')));
+const orbits = (orbit) => toTree(orbit.split('\n').map((i) => i.split(')')));
 
 const totalOrbits = (orbits, count = 0) =>
   orbits.reduce((acc, cur) => {

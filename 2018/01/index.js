@@ -1,5 +1,8 @@
 const mapToInts = (input) =>
-  input.filter((x) => x.length).map((x) => parseInt(x));
+  input
+    .split('\n')
+    .filter((x) => x.length)
+    .map((x) => parseInt(x));
 
 module.exports.part1 = (input) =>
   mapToInts(input).reduce((acc, cur) => acc + cur, 0);
